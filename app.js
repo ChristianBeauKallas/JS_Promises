@@ -4,16 +4,34 @@
  */
 function getList() {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
+        setTimeout(() => {
         let potentialFail = Math.round(Math.random() * 100) < 10;
         if (potentialFail) {
-          reject({ success: false, message: "Failed to get list of hobbits." });
+            reject({ success: false, message: "Failed to get list of hobbits." });
         } else {
-          resolve(["Bilbo", "Frodo", "Sam", "Merry", "Pippin"]);
+            resolve(["Bilbo", "Frodo", "Sam", "Merry", "Pippin"]);
         }
-      }, 10);
+    }, 10);
     });
-  }
+}
+var errorParagraph = document.getElementById('error');
+var listUL = document.getElementById('list');
+
+getList()
+.then((hobbits) => {
+    console.log(hobbits);
+
+    for(let hobbit of hobbits){
+        const li = document.createElement('li')
+        li.textContent = hobbit;
+        listUL.appendChild(li);
+    }
+})
+.catch((err)=>{
+    console.log(err);
+    errorParagraph.textContent = err.message;
+})
+
   
   // TODO: Handle the resolved or rejected states of the promise
   
